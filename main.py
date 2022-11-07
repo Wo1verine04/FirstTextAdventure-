@@ -1,40 +1,79 @@
-import random 
+import random
+import sys
 
 
-class character(): 
-  def __init__(self):
-    self.name = "Randal"
-    self.health_points = 100
-    self.attack_points = 110
-    self.magic_points = 100
-    self.stamina = 10
-    
-  def take_dmg(self, dmg):
-    self.hp -= dmg
-    if self.hp < 0:
-      self.hp = 0
-    return self.hp
+class Character():
+    def __init__(self,
+                 name,
+                 health="100",
+                 attack="20",
+                 mana="100",
+                 stamina="50"):
+        self.name = name
+        self.hp = health
+        self.ap = attack
+        self.mp = mana
+        self.stam = stamina
+
+    def take_Dmg(self, dmg):
+        self.hp -= dmg
+        if self.hp < 1:
+            self.hp = 0
+        return self.hp
+
+    def get_atk(self, defense_roll):
+        atk = random.randint(0, self.ap)
+
+        if atk < defense_roll:
+            atk = 0
+        else:
+            atk -= defense_roll
+        return atk
+
+    def is_dead(self):
+        if self.hp < 1:
+            return True
+        else:
+            return False
 
 
-  def get_atk(self, defence):
-    atk = random.rndint(0, self.attack_points)
-    print(atk)
-    if atk < 1:
-      atk = 0
-    atk -= defence
-    return atk
-    
-  def is_dead(self):
-    if self.hp < 1 :
-      return True,
-    else:
-      return False
+class End_state():
+      def __init__(self):
+        print("ending")
+        sys.exit()
+
+class Story():
+    def __init__(self):
+        print("Welcome Traveler")
+        self.new_game()
+
+    def validate(self, question, answers):
+      answer = " "
+      while answer not in answers:
+        print("please prov answer")
+        answer  = input(question)
+
+      return answer
+    def new_game(self):
+        self.create_character()
+
+    def create_character(self):
+        pc_name = input("Enter character name \n -> ")
+        pc = Character(pc_name)
+        self.outside(pc)
+
+    def outside(self, pc):
+        
+        print("You stand here  ")
+        print("cool sesond line that inspires ")
+        print("really cool third line ")
+
+        pc_input = self.validate("Enter?    \n ->",["yes","no"])
+        if pc_input == "yes":
+            print(f"yayayayaya {pc.name}")
+            pass  #choices for player
+        else:
+            print("wawawa")
 
 
-pc = character("Master Cheeks")
-pc_name = input()
-dmg_amt = random.randint(0, pc.ap)
-print("The pc took " + str(dmg_amt) + " Damage")
-print("The pc has " + str(pc.take_dmg(dmg_amt)) + " health")
-#print(f"the pc has {pc.take_dmg(dmg_amt)} health ")
-print(pc.get_atk(20))
+newgame = Story()
